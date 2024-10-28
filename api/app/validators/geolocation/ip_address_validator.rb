@@ -1,7 +1,5 @@
 class Geolocation::IpAddressValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
-    return if value.blank?
-
     begin
       IPAddr.new(value)
     rescue IPAddr::InvalidAddressError
