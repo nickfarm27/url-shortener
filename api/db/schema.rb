@@ -10,17 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_28_154724) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_28_174312) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "clicks", force: :cascade do |t|
     t.bigint "shortened_url_id", null: false
-    t.string "ip_address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "geolocation_id"
+    t.index ["geolocation_id"], name: "index_clicks_on_geolocation_id"
+    t.index ["shortened_url_id"], name: "index_clicks_on_shortened_url_id"
+  end
+
+  create_table "geolocations", force: :cascade do |t|
+    t.string "ip_address", null: false
     t.string "country_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["shortened_url_id"], name: "index_clicks_on_shortened_url_id"
+    t.index ["ip_address"], name: "index_geolocations_on_ip_address", unique: true
   end
 
   create_table "shortened_urls", force: :cascade do |t|
@@ -32,5 +40,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_28_154724) do
     t.index ["path"], name: "index_shortened_urls_on_path", unique: true
   end
 
+  add_foreign_key "clicks", "geolocations"
   add_foreign_key "clicks", "shortened_urls"
 end
