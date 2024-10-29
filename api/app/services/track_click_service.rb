@@ -49,7 +49,6 @@ class TrackClickService < ApplicationService
   def enqueue_search_geolocation_job
     return if geolocation.blank? || geolocation.country_code.present?
 
-    # TODO: create job to search geolocation
-    # SearchGeolocationJob.perform_later(ip_address)
+    SearchGeolocationJob.perform_later(geolocation_id)
   end
 end
