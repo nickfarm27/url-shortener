@@ -1,10 +1,10 @@
 class TrackClickService < ApplicationService
   include ActiveModel::Validations
 
-  validates :shortened_url_id, :redirected_at, presence: true
+  validates :shortened_url, :redirected_at, presence: true
 
   def initialize(shortened_url_id, redirected_at, ip_address)
-    @shortened_url_id = shortened_url_id
+    @shortened_url = ShortenedUrl.find_by(id: shortened_url_id)
     @redirected_at = redirected_at
     @ip_address = ip_address&.strip
   end
@@ -20,7 +20,7 @@ class TrackClickService < ApplicationService
 
   private
 
-  attr_reader :shortened_url_id, :ip_address, :redirected_at
+  attr_reader :shortened_url, :ip_address, :redirected_at
 
   def geolocation
     return @geolocation if @geolocation
@@ -38,7 +38,7 @@ class TrackClickService < ApplicationService
 
   def track_click
     Click.create!(
-      shortened_url_id: shortened_url_id,
+      shortened_url: shortened_url,
       created_at: redirected_at,
       geolocation: geolocation
     )
