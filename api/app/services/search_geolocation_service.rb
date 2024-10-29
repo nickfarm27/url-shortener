@@ -1,3 +1,5 @@
+require "net/http"
+
 class SearchGeolocationService < ApplicationService
   include ActiveModel::Validations
 
