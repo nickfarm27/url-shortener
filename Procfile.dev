@@ -1,3 +1,4 @@
 web: cd api && rails s
 worker: cd api && sidekiq
 redis: redis-server
+client: cd client && yarn dev

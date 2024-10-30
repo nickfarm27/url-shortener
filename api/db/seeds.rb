@@ -7,3 +7,8 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+unless Counter.exists?(name: "urls")
+  # in base 62, this is 1000000
+  Counter.create!(value: 56_800_235_584, name: "urls")
+end
