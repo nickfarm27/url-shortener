@@ -22,6 +22,24 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
 ];
 
+// this makes window.ENV type safe
+declare global {
+  interface Window {
+    ENV: {
+      API_SERVER_URL: string;
+    };
+  }
+}
+
+// setting browser env based on this https://remix.run/docs/en/main/guides/envvars#browser-environment-variables
+export async function loader() {
+  return {
+    ENV: {
+      API_SERVER_URL: process.env.API_SERVER_URL,
+    },
+  };
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">

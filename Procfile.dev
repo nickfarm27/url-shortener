@@ -1,4 +1,4 @@
-web: cd api && rails s
+web: cd api && rails s -p 3000
 worker: cd api && sidekiq
 redis: redis-server
 client: cd client && yarn dev
