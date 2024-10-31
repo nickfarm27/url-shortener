@@ -7,6 +7,7 @@ gem 'dotenv', groups: [:development, :test]
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.4", ">= 7.1.4.2"
 
+gem 'pagy', '~> 9.1'
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 gem 'pry', '~> 0.14.2'

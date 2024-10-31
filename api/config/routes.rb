@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :shortened_urls, only: [:create]
+      resources :shortened_urls, only: [:index, :create]
 
       get "shortened_paths/:shortened_path/redirect", to: "shortened_paths#redirect"
     end

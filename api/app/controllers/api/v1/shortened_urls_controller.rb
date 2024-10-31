@@ -1,4 +1,10 @@
 class Api::V1::ShortenedUrlsController < ApplicationController
+  def index
+    pagy, records = pagy(ShortenedUrl.order(created_at: :desc))
+
+    render json: { shortened_urls: records, meta: pagy }
+  end
+
   def create
     shortened_url = ShortenedUrl.create!(permitted_params)
 
