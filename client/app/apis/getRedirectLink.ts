@@ -1,26 +1,24 @@
-import { apiClient } from "./apiClient";
+import { apiClient } from "../apiClient";
 
 type RedirectResponse = {
-  targetUrl?: string;
+  targetUrl: string;
   errorStatusCode?: number;
 };
 
 export async function getRedirectLink(
   shortPath: string,
-  ipAddress: string | null
+  ipAddress?: string
 ): Promise<RedirectResponse> {
   try {
-    const response = await apiClient(
+    return await apiClient(
       `/api/v1/shortened_paths/${shortPath}/redirect`,
       {
         params: {
-          ip_address: ipAddress || undefined,
+          ip_address: ipAddress,
         },
       }
     );
-
-    return response;
   } catch (error) {
-    return { errorStatusCode: error.status };
+    return { errorStatusCode: error.status, targetUrl: "" };
   }
 }
