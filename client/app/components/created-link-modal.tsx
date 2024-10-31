@@ -6,8 +6,9 @@ import {
   DialogDescription,
 } from "./ui/dialog";
 import { CopyLinkButton } from "./copy-link-button";
-import { Link } from "@remix-run/react";
 import { Dispatch, SetStateAction } from "react";
+import { parseShortenedUrl } from "~/helpers/shortenedUrl.client";
+import { ExternalLink } from "./external-link";
 
 interface CreatedLinkModalProps {
   shortenedUrl?: {
@@ -27,12 +28,7 @@ export function CreatedLinkModal({
   if (!shortenedUrl) return null;
 
   const { path, targetUrl, title } = shortenedUrl;
-
-  const location = typeof window === "undefined" ? undefined : window.location;
-  const domain = location?.origin;
-  const host = location?.host;
-  const shortenedUrlWithDomain = `${domain}/${path}`;
-  const shortenedUrlWithHost = `${host}/${path}`;
+  const { shortenedUrlWithHost, shortenedUrlWithOrigin } = parseShortenedUrl(path);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -43,27 +39,17 @@ export function CreatedLinkModal({
         <DialogDescription>Copy the link below and share it!</DialogDescription>
         <div className="flex flex-col items-center bg-slate-200 p-4 rounded-lg">
           {title && <p className="text-xl font-bold mb-2">{title}</p>}
-          <Link
-            to={`/${path}`}
-            rel="noopener noreferrer"
-            target="_blank"
-            className="text-lg font-bold text-blue-700 hover:underline"
-          >
+          <ExternalLink to={`/${path}`} className="text-lg font-bold text-blue-700 hover:underline">
             {shortenedUrlWithHost}
-          </Link>
+          </ExternalLink>
           <p className="text-sm text-slate-500">
             Redirects to{" "}
-            <Link
-              to={targetUrl}
-              rel="noopener noreferrer"
-              target="_blank"
-              className="underline"
-            >
+            <ExternalLink to={targetUrl} className="underline">
               {targetUrl}
-            </Link>
+            </ExternalLink>
           </p>
           <CopyLinkButton
-            link={shortenedUrlWithDomain}
+            link={shortenedUrlWithOrigin}
             className="w-full mt-4"
           />
         </div>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { CheckIcon, ClipboardCopyIcon } from "@radix-ui/react-icons";
 
-export function CopyLinkButton({ link, className }: { link: string; className?: string }) {
+export function CopyLinkButton({ link, className, size = "default" }: { link: string; className?: string; size?: "default" | "sm" }) {
   const [hasCopied, setHasCopied] = useState(false);
 
   function copyLinkToClipboard() {
@@ -12,7 +12,7 @@ export function CopyLinkButton({ link, className }: { link: string; className?: 
   }
 
   return (
-    <Button className={className} onClick={copyLinkToClipboard}>
+    <Button className={className} onClick={copyLinkToClipboard} size={size}>
       <span className="sr-only">Copy</span>
       Copy link
       {hasCopied ? (

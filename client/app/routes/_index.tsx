@@ -16,6 +16,8 @@ import { Input } from "~/components/ui/input";
 import { useCreateShortenedUrl } from "~/hooks/useCreateShortenedUrl";
 import { useState } from "react";
 import { CreatedLinkModal } from "~/components/created-link-modal";
+import { AllLinksSheet } from "~/components/all-links-sheet";
+import { useQueryClient } from "@tanstack/react-query";
 
 const formSchema = z.object({
   targetUrl: z
@@ -42,6 +44,8 @@ export default function Index() {
   }>();
   const [openCreatedLinkModal, setOpenCreatedLinkModal] = useState(false);
 
+  const queryClient = useQueryClient();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -63,6 +67,7 @@ export default function Index() {
         setNewShortenedUrl(data);
         setOpenCreatedLinkModal(true);
         setErrorMessage("");
+        queryClient.invalidateQueries({ queryKey: ["shortenedUrls"] });
         form.reset();
       },
       onError(error) {
@@ -122,6 +127,7 @@ export default function Index() {
         </CardContent>
       </Card>
       <CreatedLinkModal shortenedUrl={newShortenedUrl} open={openCreatedLinkModal} onOpenChange={setOpenCreatedLinkModal} />
+      <AllLinksSheet />
     </div>
   );
 }
