@@ -7,9 +7,19 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :shortened_urls, only: [:index, :create]
+      resources :shortened_urls, only: %i[index show create]
 
       get "shortened_paths/:shortened_path/redirect", to: "shortened_paths#redirect"
+
+      namespace :analytics do
+        resources :shortened_urls, only: [] do
+          member do
+            get :total_clicks
+            get :clicks_by_countries
+            get :clicks
+          end
+        end
+      end
     end
   end
 end

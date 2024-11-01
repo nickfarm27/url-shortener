@@ -13,6 +13,7 @@ class TrackClickService < ApplicationService
     return result(success: false, errors: errors) if invalid?
 
     track_click
+    purge_analytics_cache
     enqueue_search_geolocation_job
 
     result(success: errors.empty?, errors: errors)
@@ -21,10 +22,11 @@ class TrackClickService < ApplicationService
   private
 
   attr_reader :shortened_url, :ip_address, :redirected_at
+  attr_accessor :click
 
   def geolocation
     return @geolocation if @geolocation
-    return if ip_address.blank?
+    return if click.blank? || ip_address.blank?
 
     @geolocation = Geolocation.find_or_create_by!(ip_address: ip_address)
   rescue ActiveRecord::RecordInvalid
@@ -37,13 +39,19 @@ class TrackClickService < ApplicationService
   end
 
   def track_click
-    Click.create!(
+    self.click = Click.create!(
       shortened_url: shortened_url,
       created_at: redirected_at,
       geolocation: geolocation
     )
   rescue ActiveRecord::RecordInvalid => e
     errors.add(:base, e.record.errors.full_messages.join(", "))
+  end
+
+  def purge_analytics_cache
+    return if click.blank?
+
+    Analytics::ShortenedUrl::PurgeAnalyticsCacheService.call(shortened_url)
   end
 
   def enqueue_search_geolocation_job

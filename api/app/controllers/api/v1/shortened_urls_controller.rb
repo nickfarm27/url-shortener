@@ -5,6 +5,16 @@ class Api::V1::ShortenedUrlsController < ApplicationController
     render json: { shortened_urls: records, meta: pagy }
   end
 
+  def show
+    shortened_url = ShortenedUrl.find_by(id: params[:id])
+
+    if shortened_url.blank?
+      render json: { error: "Shortened URL not found" }, status: :not_found
+    else
+      render json: shortened_url
+    end
+  end
+
   def create
     shortened_url = ShortenedUrl.create!(permitted_params)
 
