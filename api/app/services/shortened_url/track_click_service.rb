@@ -1,4 +1,4 @@
-class TrackClickService < ApplicationService
+class ShortenedUrl::TrackClickService < ApplicationService
   include ActiveModel::Validations
 
   validates :shortened_url, :redirected_at, presence: true

@@ -1,7 +1,7 @@
 class Api::V1::ShortenedPathsController < ApplicationController
   def redirect
     if shortened_url.present?
-      TrackClickJob.perform_later(shortened_url[:id], Time.zone.now, ip_address)
+      ShortenedUrl::TrackClickJob.perform_later(shortened_url[:id], Time.zone.now, ip_address)
 
       render json: { target_url: shortened_url[:target_url] }, status: :ok
     else
