@@ -24,6 +24,8 @@ class SearchGeolocationService < ApplicationService
   attr_accessor :payload
 
   def country_code_not_filled
+    return if geolocation.blank?
+
     errors.add(:base, "Country code already filled") if geolocation.country_code.present?
   end
 
