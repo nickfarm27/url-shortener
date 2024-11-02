@@ -4,8 +4,8 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./ui/sheet";
-import { Button } from "./ui/button";
+} from "../ui/sheet";
+import { Button } from "../ui/button";
 import { ShortenedUrlsList } from "./shortened-urls-list";
 
 export function AllLinksSheet() {

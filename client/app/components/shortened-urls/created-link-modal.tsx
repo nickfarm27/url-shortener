@@ -4,11 +4,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "./ui/dialog";
-import { CopyLinkButton } from "./copy-link-button";
+} from "../ui/dialog";
+import { CopyLinkButton } from "../copy-link-button";
 import { Dispatch, SetStateAction } from "react";
 import { parseShortenedUrl } from "~/helpers/shortenedUrl.client";
-import { ExternalLink } from "./external-link";
+import { ExternalLink } from "../external-link";
 
 interface CreatedLinkModalProps {
   shortenedUrl?: {

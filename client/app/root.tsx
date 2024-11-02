@@ -5,11 +5,12 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useRouteError,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
 import styles from "./tailwind.css?url";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -38,14 +39,18 @@ declare global {
 export async function loader() {
   return {
     ENV: {
-      API_SERVER_URL: process.env.API_SERVER_URL,
+      API_SERVER_URL: process.env.API_SERVER_URL || "",
     },
   };
 }
 
-export function Layout({ children }: { children: React.ReactNode }) {
-  const { ENV } = useLoaderData<typeof loader>();
-
+function Document({
+  children,
+  env = {},
+}: {
+  children: React.ReactNode;
+  env?: Record<string, string>;
+}) {
   return (
     <html lang="en">
       <head>
@@ -58,7 +63,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(ENV)}`,
+            __html: `window.ENV = ${JSON.stringify(env)}`,
           }}
         />
         <ScrollRestoration />
@@ -71,10 +76,34 @@ export function Layout({ children }: { children: React.ReactNode }) {
 const queryClient = new QueryClient();
 
 export default function App() {
+  const { ENV } = useLoaderData<typeof loader>();
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <Outlet />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <Document env={ENV}>
+      <QueryClientProvider client={queryClient}>
+        <Outlet />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </Document>
+  );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  const header = error.status === 404 ? "Error 404: Page not found" : "Something went wrong";
+  const message = error.status === 404 ? "This page does not exist" : "Something went wrong with the request. Please try again.";
+
+  return (
+    <Document>
+      <div className="flex h-[100dvh] items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <h1 className="text-3xl font-bold">{header}</h1>
+          <p className="text-lg">
+            {message}
+          </p>
+        </div>
+      </div>
+    </Document>
   );
 }

@@ -47,17 +47,8 @@ export function ShortenedUrlDetails() {
     );
   }
 
-  if (!shortenedUrl) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Error 404: Not found</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm">Shortened URL not found</p>
-        </CardContent>
-      </Card>
-    );
+  if (!shortenedUrl || shortenedUrl.id === 0) {
+    throw new Response("Not found", { status: 404 });
   }
 
   const { title, path, targetUrl, createdAt } = shortenedUrl;

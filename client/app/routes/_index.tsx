@@ -15,8 +15,8 @@ import {
 import { Input } from "~/components/ui/input";
 import { useCreateShortenedUrl } from "~/hooks/useCreateShortenedUrl";
 import { useState } from "react";
-import { CreatedLinkModal } from "~/components/created-link-modal";
-import { AllLinksSheet } from "~/components/all-links-sheet";
+import { CreatedLinkModal } from "~/components/shortened-urls/created-link-modal";
+import { AllLinksSheet } from "~/components/shortened-urls/all-links-sheet";
 import { useQueryClient } from "@tanstack/react-query";
 
 const formSchema = z.object({

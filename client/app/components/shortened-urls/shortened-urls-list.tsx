@@ -1,6 +1,6 @@
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "../ui/skeleton";
 import { useShortenedUrls } from "~/hooks/useShortenedUrls";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { ShortenedUrlCard } from "./shortened-url-card";
 
 export function ShortenedUrlsList() {

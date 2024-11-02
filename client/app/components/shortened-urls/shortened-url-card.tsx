@@ -1,9 +1,9 @@
-import { Card, CardContent } from "./ui/card";
-import { CopyLinkButton } from "./copy-link-button";
+import { Card, CardContent } from "../ui/card";
+import { CopyLinkButton } from "../copy-link-button";
 import { Calendar, ChartColumnBig } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { ShortenedUrl } from "~/types/shortenedUrl";
-import { ExternalLink } from "./external-link";
+import { ExternalLink } from "../external-link";
 import { parseShortenedUrl } from "~/helpers/shortenedUrl.client";
 
 export function ShortenedUrlCard({
@@ -42,7 +42,7 @@ export function ShortenedUrlCard({
         </div>
         <div className="mt-2 flex gap-2">
           <CopyLinkButton link={shortenedUrlWithOrigin} size="sm" />
-          <ExternalLink to={`/analytics/${id}`}>
+          <ExternalLink to={`/analytics/shortUrl/${id}`}>
             <Button variant="outline" size="sm">
               <ChartColumnBig className="h-4 w-4" />
             </Button>
