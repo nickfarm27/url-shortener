@@ -36,13 +36,13 @@ export function CreatedLinkModal({
         <DialogHeader>
           <DialogTitle>Your link is ready! 🎉</DialogTitle>
         </DialogHeader>
-        <DialogDescription>Copy the link below and share it!</DialogDescription>
+        <DialogDescription className="text-center sm:text-start">Copy the link below and share it!</DialogDescription>
         <div className="flex flex-col items-center bg-slate-200 p-4 rounded-lg">
           {title && <p className="text-xl font-bold mb-2">{title}</p>}
           <ExternalLink to={`/${path}`} className="text-lg font-bold text-blue-700 hover:underline">
             {shortenedUrlWithHost}
           </ExternalLink>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 text-center mt-2">
             Redirects to{" "}
             <ExternalLink to={targetUrl} className="underline">
               {targetUrl}
