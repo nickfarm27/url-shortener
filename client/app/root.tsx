@@ -91,8 +91,10 @@ export default function App() {
 export function ErrorBoundary() {
   const error = useRouteError();
 
-  const header = error.status === 404 ? "Error 404: Page not found" : "Something went wrong";
-  const message = error.status === 404 ? "This page does not exist" : "Something went wrong with the request. Please try again.";
+  const errorStatus404 = error.status === 404;
+
+  const header = errorStatus404 ? "Error 404: Page not found" : "Something went wrong";
+  const message = errorStatus404 ? "This page does not exist" : "Something went wrong with the request. Please try again.";
 
   return (
     <Document>
