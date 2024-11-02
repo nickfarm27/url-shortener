@@ -4,6 +4,6 @@ class Geolocation < ApplicationRecord
   before_validation :strip_whitespace
 
   def strip_whitespace
-    self.ip_address = ip_address.strip
+    self.ip_address = ip_address&.strip
   end
 end
