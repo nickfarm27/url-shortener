@@ -28,7 +28,7 @@ class Api::V1::Analytics::ShortenedUrlsController < ApplicationController
   def set_shortened_url
     @shortened_url = ShortenedUrl.find_by(id: shortened_url_id)
 
-    return unless @shortened_url.blank?
+    return if @shortened_url.present?
 
     render json: { error: "Shortened URL with ID #{shortened_url_id} not found" }, status: :not_found
   end
