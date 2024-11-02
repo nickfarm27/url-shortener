@@ -7,6 +7,7 @@ export function useShortenedUrls() {
     queryFn: getShortenedUrls,
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.meta.next,
+    staleTime: 5 * 60 * 1000,
   });
 
   return query;

@@ -6,8 +6,12 @@ import { ShortenedUrl } from "~/types/shortenedUrl";
 import { ExternalLink } from "./external-link";
 import { parseShortenedUrl } from "~/helpers/shortenedUrl.client";
 
-export function ShortenedUrlCard({ shortenedUrl }: { shortenedUrl: ShortenedUrl }) {
-  const { path, targetUrl, title, createdAt } = shortenedUrl;
+export function ShortenedUrlCard({
+  shortenedUrl,
+}: {
+  shortenedUrl: ShortenedUrl;
+}) {
+  const { id, path, targetUrl, title, createdAt } = shortenedUrl;
   const { shortenedUrlWithHost, shortenedUrlWithOrigin } =
     parseShortenedUrl(path);
   const createdDate = new Date(createdAt).toLocaleString("en-US", {
@@ -20,10 +24,16 @@ export function ShortenedUrlCard({ shortenedUrl }: { shortenedUrl: ShortenedUrl 
     <Card>
       <CardContent className="py-4 flex flex-col gap-1">
         <p className="font-semibold">{title}</p>
-        <ExternalLink to={`/${path}`} className="text-blue-700 text-sm font-medium hover:underline">
+        <ExternalLink
+          to={`/${path}`}
+          className="text-blue-700 text-sm font-medium hover:underline"
+        >
           {shortenedUrlWithHost}
         </ExternalLink>
-        <ExternalLink to={targetUrl} className="text-sm text-muted-foreground hover:underline">
+        <ExternalLink
+          to={targetUrl}
+          className="text-sm text-muted-foreground hover:underline"
+        >
           {targetUrl}
         </ExternalLink>
         <div className="text-muted-foreground flex items-center gap-1">
@@ -32,9 +42,11 @@ export function ShortenedUrlCard({ shortenedUrl }: { shortenedUrl: ShortenedUrl 
         </div>
         <div className="mt-2 flex gap-2">
           <CopyLinkButton link={shortenedUrlWithOrigin} size="sm" />
-          <Button variant="outline" size="sm">
-            <ChartColumnBig className="h-4 w-4" />
-          </Button>
+          <ExternalLink to={`/analytics/${id}`}>
+            <Button variant="outline" size="sm">
+              <ChartColumnBig className="h-4 w-4" />
+            </Button>
+          </ExternalLink>
         </div>
       </CardContent>
     </Card>
