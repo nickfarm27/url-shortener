@@ -25,8 +25,7 @@ class ShortenedUrl::TrackClickService < ApplicationService
   attr_accessor :click
 
   def geolocation
-    return @geolocation if @geolocation
-    return if click.blank? || ip_address.blank?
+    return @geolocation if @geolocation || ip_address.blank?
 
     @geolocation = Geolocation.find_or_create_by!(ip_address: ip_address)
   rescue ActiveRecord::RecordInvalid
