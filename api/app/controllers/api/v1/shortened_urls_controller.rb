@@ -6,8 +6,6 @@ class Api::V1::ShortenedUrlsController < ApplicationController
   end
 
   def show
-    shortened_url = ShortenedUrl.find_by(id: params[:id])
-
     if shortened_url.blank?
       render json: { error: "Shortened URL not found" }, status: :not_found
     else
@@ -27,5 +25,26 @@ class Api::V1::ShortenedUrlsController < ApplicationController
 
   def permitted_params
     params.permit(:target_url, :title)
+  end
+
+  def shortened_url_id
+    params[:id]
+  end
+
+  def shortened_url
+    @shortened_url ||= fetch_from_cache || fetch_from_database
+  end
+
+  def fetch_from_cache
+    Rails.cache.read("shortened_url/#{shortened_url_id}", expires_in: 5.minutes)
+  end
+
+  def fetch_from_database
+    shortened_url_record = ShortenedUrl.find_by(id: shortened_url_id)
+    return nil if shortened_url_record.blank?
+
+    shortened_url_hash = shortened_url_record.attributes
+    Rails.cache.write("shortened_url/#{shortened_url_id}", shortened_url_hash)
+    shortened_url_hash
   end
 end

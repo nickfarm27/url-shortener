@@ -38,7 +38,7 @@ RSpec.describe Api::V1::ShortenedPathsController, type: :controller do
           }
 
           # Manually set the cache
-          Rails.cache.write("shortened_url/#{shortened_url.path}", cached_data)
+          Rails.cache.write("shortened_url/path/#{shortened_url.path}", cached_data)
 
           # Update the record
           shortened_url.update!(target_url: "https://newurl.com")

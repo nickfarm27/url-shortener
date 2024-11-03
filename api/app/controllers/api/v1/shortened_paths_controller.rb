@@ -24,7 +24,7 @@ class Api::V1::ShortenedPathsController < ApplicationController
   end
 
   def fetch_from_cache
-    Rails.cache.read("shortened_url/#{shortened_path}")
+    Rails.cache.read("shortened_url/path/#{shortened_path}")
   end
 
   def fetch_from_database
@@ -36,7 +36,7 @@ class Api::V1::ShortenedPathsController < ApplicationController
       target_url: shortened_url_record.target_url,
     }
 
-    Rails.cache.write("shortened_url/#{shortened_path}", shortened_url_hash)
+    Rails.cache.write("shortened_url/path/#{shortened_path}", shortened_url_hash)
     shortened_url_hash
   end
 end
