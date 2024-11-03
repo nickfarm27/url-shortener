@@ -14,7 +14,7 @@ export function ExternalLink({
       to={to}
       rel="noopener noreferrer"
       target="_blank"
-      className={className}
+      className={`${className} break-all`}
     >
       {children}
     </Link>
