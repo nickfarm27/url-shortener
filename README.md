@@ -2,6 +2,10 @@
 
 URL Shortener is a URL shortener application built with Ruby on Rails, PostgreSQL, Redis, and Remix.
 
+Demo URL: https://surl-qiyb.onrender.com
+
+> **Note:** The frontend application is hosted on a free Render instance. It may take 50 seconds or more for the application to start and process the first request.
+
 ## Features
 
 - Shorten URLs: A feature that allows users to create short URLs for long URLs.
@@ -26,7 +30,7 @@ cd url-shortener
 3. Use the following versions for the project (the versions can be found in `.tool-versions` file):
 
 - Ruby: 3.3.4
-- Node: 20.18.0
+- Node.js: 20.18.0
 
 4. This monorepo stores the rails app in the `api` directory and the client app in the `client` directory. 
 5. To set up the rails app, run the following command:
