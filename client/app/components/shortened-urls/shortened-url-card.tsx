@@ -32,7 +32,7 @@ export function ShortenedUrlCard({
         </ExternalLink>
         <ExternalLink
           to={targetUrl}
-          className="text-sm text-muted-foreground hover:underline"
+          className="text-xs text-muted-foreground hover:underline"
         >
           {targetUrl}
         </ExternalLink>

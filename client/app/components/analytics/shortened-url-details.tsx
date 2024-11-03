@@ -86,12 +86,12 @@ export function ShortenedUrlDetails() {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col space-y-2 items-start">
-          <ExternalLink to={shortenedUrlWithOrigin} className="hover:underline">
+          <ExternalLink to={shortenedUrlWithOrigin} className="hover:underline font-medium text-blue-700">
             {shortenedUrlWithHost}
           </ExternalLink>
           <ExternalLink
             to={targetUrl}
-            className="text-muted-foreground text-sm hover:underline break-all"
+            className="text-muted-foreground text-sm hover:underline"
           >
             {targetUrl}
           </ExternalLink>
